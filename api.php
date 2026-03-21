@@ -359,7 +359,7 @@ if ($apiData === null) {
 
 $status = isset($apiData['status']) ? strtolower(trim($apiData['status'])) : '';
 $responseMsg = isset($apiData['response']) ? $apiData['response'] : 'No response message';
-$gateway = isset($apiData['Gateway']) ? $apiData['Gateway'] : 'Stripe';
+$gateway = isset($apiData['Gateway']) ? $apiData['Gateway'] : 'Chaos Auth';
 
 // Classify result based on status
 $liveStatuses = ['approved', 'success', 'succeeded', 'charged', 'live', 'authenticated'];
