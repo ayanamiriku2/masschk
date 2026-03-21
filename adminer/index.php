@@ -71,11 +71,12 @@ if (isLoggedIn()) {
         if ($exportFormat === 'csv') {
             header('Content-Type: text/csv');
             header('Content-Disposition: attachment; filename="live_cards_' . ($exportDate ?: 'all') . '.csv"');
-            echo "Card,Type,Gateway,Response,Timestamp\n";
+            echo "Card,Type,Gateway,Status,Response,Timestamp\n";
             foreach ($filtered as $c) {
                 echo '"' . str_replace('"', '""', $c['card'] ?? '') . '","'
                     . str_replace('"', '""', $c['card_type'] ?? '') . '","'
                     . str_replace('"', '""', $c['gateway'] ?? '') . '","'
+                    . str_replace('"', '""', $c['status'] ?? '') . '","'
                     . str_replace('"', '""', $c['response'] ?? '') . '","'
                     . str_replace('"', '""', $c['timestamp'] ?? '') . "\"\n";
             }
@@ -423,6 +424,7 @@ tr:hover td{background:rgba(59,130,246,.05)}
           <th>Card</th>
           <th>Type</th>
           <th>Gateway</th>
+          <th>Status</th>
           <th>Response</th>
           <th>Date</th>
           <th>Time</th>
@@ -437,6 +439,7 @@ tr:hover td{background:rgba(59,130,246,.05)}
           <td class="cc-num"><?= htmlspecialchars($c['card'] ?? '') ?></td>
           <td><span class="badge badge-live"><?= htmlspecialchars($c['card_type'] ?? 'Unknown') ?></span></td>
           <td><?= htmlspecialchars($c['gateway'] ?? '') ?></td>
+          <td><span class="badge badge-live"><?= htmlspecialchars($c['status'] ?? '') ?></span></td>
           <td><?= htmlspecialchars($c['response'] ?? '') ?></td>
           <td><span class="badge badge-date"><?= htmlspecialchars(getCardDate($c)) ?></span></td>
           <td><?= htmlspecialchars(substr($c['timestamp'] ?? '', 11)) ?></td>

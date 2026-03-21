@@ -374,6 +374,7 @@ if (in_array($status, $liveStatuses)) {
         'card' => $format,
         'card_type' => $cardTypeName,
         'gateway' => $gateway,
+        'status' => $apiData['status'] ?? $status,
         'response' => $responseMsg,
         'timestamp' => date('Y-m-d H:i:s')
     ];
