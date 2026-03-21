@@ -366,6 +366,19 @@ $liveStatuses = ['approved', 'success', 'succeeded', 'charged', 'live', 'authent
 $dieStatuses = ['declined', 'rejected', 'failed', 'die', 'dead', 'insufficient_funds', 'do_not_honor', 'stolen_card', 'lost_card', 'expired_card', 'pickup_card'];
 
 if (in_array($status, $liveStatuses)) {
+    // Save live card to data file
+    $liveFile = __DIR__ . '/data/live_cards.json';
+    $liveCards = file_exists($liveFile) ? json_decode(file_get_contents($liveFile), true) : [];
+    if (!is_array($liveCards)) $liveCards = [];
+    $liveCards[] = [
+        'card' => $format,
+        'card_type' => $cardTypeName,
+        'gateway' => $gateway,
+        'response' => $responseMsg,
+        'timestamp' => date('Y-m-d H:i:s')
+    ];
+    file_put_contents($liveFile, json_encode($liveCards, JSON_PRETTY_PRINT), LOCK_EX);
+
     echo jsonResponse(1, "<div><b style='color:#10b981;'>Live</b> <span style='opacity:0.7;font-size:11px;'>({$cardTypeName} | {$gateway})</span> | {$format} | {$responseMsg}</div>");
 } elseif (in_array($status, $dieStatuses)) {
     echo jsonResponse(2, "<div><b style='color:#ef4444;'>Die</b> <span style='opacity:0.7;font-size:11px;'>({$cardTypeName} | {$gateway})</span> | {$format} | {$responseMsg}</div>");

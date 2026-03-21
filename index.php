@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stripe Mass CC Checker</title>
+  <title>Mass CC Checker</title>
   <meta name="description" content="Our free credit card checker instantly validates card numbers using the Luhn algorithm. Check Visa, Mastercard, Amex & more. No registration required.">
   <meta name="keywords" content="credit card validator, CC number checker, Luhn algorithm checker, payment card verification, free card checker, test credit cards, card number validator, BIN checker, card security check, bulk checker, mrchecker, namso, cc checker live">
   
   <!-- Canonical & Social Meta -->
   <link rel="canonical" href="https://uncoder.eu.org/cc-checker">
-  <meta property="og:title" content="Stripe Mass CC Checker">
+  <meta property="og:title" content="Mass CC Checker">
   <meta property="og:description" content="Instantly check credit card validity with our free online checker. Supports all major card types with Luhn algorithm verification.">
   <meta property="og:image" content="https://uncoder.eu.org/assets/icons/apple-touch-icon.png">
   
@@ -22,7 +22,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Stripe Mass CC Checker",
+      "name": "Mass CC Checker",
       "url": "https://uncoder.eu.org/cc-checker",
       "description": "Free online tool to validate credit card numbers using the Luhn algorithm",
       "applicationCategory": "FinanceApplication",
@@ -46,7 +46,7 @@
 </head>
 <body>
   <div class="container-main">
-    <h1 class="page-title">Stripe Mass CC Checker</h1>
+    <h1 class="page-title">Mass CC Checker</h1>
     
     <!-- Info Messages -->
     <div class="info" id="info-message"></div>
