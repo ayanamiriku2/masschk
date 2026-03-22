@@ -1,10 +1,16 @@
 FROM php:8.2-apache
 
-# Fix MPM conflict: remove all MPM configs, then enable only prefork + needed modules
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf /etc/apache2/mods-enabled/mpm_*.load && \
-    ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf && \
-    ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load && \
-    a2enmod rewrite headers
+# Force single MPM: remove ALL mpm modules, enable only prefork
+# Also enable rewrite + headers (without triggering mpm_event)
+RUN set -eux; \
+    find /etc/apache2/mods-enabled -name 'mpm_*' -delete; \
+    ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf; \
+    ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load; \
+    a2enmod rewrite; \
+    a2enmod headers
+
+# Cache bust for Railway: 2026-03-23-v2
+RUN echo "build $(date +%s)" > /dev/null
 
 # Increase PHP limits for large card lists
 RUN echo 'post_max_size = 64M' > /usr/local/etc/php/conf.d/uploads.ini && \
