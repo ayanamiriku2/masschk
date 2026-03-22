@@ -21,6 +21,7 @@ COPY . /app/
 RUN mkdir -p /tmp/masschk_rate && chmod 777 /tmp/masschk_rate \
     && chmod -R 777 /app/data
 
-EXPOSE 80
+ENV PORT=8080
+EXPOSE 8080
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "/app", "/app/router.php"]
+CMD sh -c "php -S 0.0.0.0:${PORT} -t /app /app/router.php"
