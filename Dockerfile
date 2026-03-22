@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-RUN a2enmod rewrite headers
+RUN a2dismod mpm_event && a2enmod mpm_prefork rewrite headers
 
 # Increase PHP limits for large card lists
 RUN echo 'post_max_size = 64M' > /usr/local/etc/php/conf.d/uploads.ini && \
