@@ -47,11 +47,17 @@ $csrfToken = generateCSRFToken();
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
+  <!-- Matrix Rain Background -->
+  <canvas id="matrix-rain"></canvas>
+
   <div class="container-main">
+    <div class="hacker-header">
+      <span class="status-dot"></span> system online &mdash; secure connection established
+    </div>
+
     <h1 class="page-title">Mass CC Checker</h1>
     
     <!-- Info Messages -->
@@ -143,6 +149,11 @@ $csrfToken = generateCSRFToken();
         </div>
       </div>
     </form>
+
+    <div class="glow-divider"></div>
+    <div class="matrix-footer">
+      &lt;/&gt; masschk &bull; matrix protocol v2.0
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -496,9 +507,9 @@ $csrfToken = generateCSRFToken();
        */
       function showInfo(message, type = 'info') {
         const colors = {
-          info: 'var(--accent-info)',
-          error: 'var(--accent-danger)',
-          success: 'var(--accent-success)'
+          info: 'var(--matrix-green)',
+          error: 'var(--matrix-red)',
+          success: 'var(--matrix-green)'
         };
         
         elements.infoMessage
@@ -530,11 +541,11 @@ $csrfToken = generateCSRFToken();
        */
       function createResultHTML(status, data, cardType, message) {
         const colors = {
-          'Live': '#10b981',
-          'Die': '#ef4444',
-          'Invalid': '#ef4444',
-          'Unknown': '#f59e0b',
-          'Error': '#ef4444'
+          'Live': '#00ff41',
+          'Die': '#ff1744',
+          'Invalid': '#ff1744',
+          'Unknown': '#ffd600',
+          'Error': '#ff1744'
         };
         
         const color = colors[status] || '#a0a3b1';
@@ -715,6 +726,54 @@ $csrfToken = generateCSRFToken();
       });
 
     });
+  </script>
+
+  <!-- Matrix Rain Effect -->
+  <script>
+  (function() {
+    const canvas = document.getElementById('matrix-rain');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(2, 10, 2, 0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ff41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.globalAlpha = Math.random() * 0.5 + 0.1;
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', function() {
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+
+    draw();
+  })();
   </script>
 </body>
 </html>

@@ -18,7 +18,7 @@ require_once __DIR__ . '/security.php';
 // Run security checks before processing
 $securityError = runSecurityChecks();
 if ($securityError !== null) {
-    echo json_encode(['error' => 4, 'msg' => "<div><b style='color:#ef4444;'>Security Error</b> | {$securityError}</div>"]);
+    echo json_encode(['error' => 4, 'msg' => "<div><b style='color:#ff1744;'>Security Error</b> | {$securityError}</div>"]);
     exit;
 }
 
