@@ -15,8 +15,8 @@ define('ALLOWED_ORIGINS', [
 ]);
 
 // Rate limit: max requests per window
-define('RATE_LIMIT_MAX', 100);
-define('RATE_LIMIT_WINDOW', 60); // seconds
+define('RATE_LIMIT_MAX', 600);
+define('RATE_LIMIT_WINDOW', 120); // seconds
 
 /**
  * Generate a CSRF token and store in session
@@ -73,39 +73,25 @@ function validateOrigin(): bool {
 }
 
 /**
- * Simple file-based rate limiting by IP
+ * Session-based rate limiting (no file I/O overhead)
  */
 function checkRateLimit(): bool {
-    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-    $hash = md5($ip);
-    $rateDir = sys_get_temp_dir() . '/masschk_rate';
-
-    if (!is_dir($rateDir)) {
-        mkdir($rateDir, 0700, true);
-    }
-
-    $rateFile = $rateDir . '/' . $hash;
     $now = time();
 
-    $data = ['count' => 0, 'window_start' => $now];
-
-    if (file_exists($rateFile)) {
-        $content = file_get_contents($rateFile);
-        $stored = json_decode($content, true);
-        if (is_array($stored)) {
-            $data = $stored;
-        }
+    if (!isset($_SESSION['rate_limit']) || !is_array($_SESSION['rate_limit'])) {
+        $_SESSION['rate_limit'] = ['count' => 0, 'window_start' => $now];
     }
+
+    $rl = &$_SESSION['rate_limit'];
 
     // Reset window if expired
-    if ($now - $data['window_start'] > RATE_LIMIT_WINDOW) {
-        $data = ['count' => 0, 'window_start' => $now];
+    if ($now - $rl['window_start'] > RATE_LIMIT_WINDOW) {
+        $rl = ['count' => 0, 'window_start' => $now];
     }
 
-    $data['count']++;
-    file_put_contents($rateFile, json_encode($data), LOCK_EX);
+    $rl['count']++;
 
-    return $data['count'] <= RATE_LIMIT_MAX;
+    return $rl['count'] <= RATE_LIMIT_MAX;
 }
 
 /**

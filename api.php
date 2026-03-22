@@ -346,10 +346,12 @@ $ch = curl_init();
 curl_setopt_array($ch, [
     CURLOPT_URL => $apiUrl,
     CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CONNECTTIMEOUT => 10,
     CURLOPT_TIMEOUT => 60,
     CURLOPT_FOLLOWLOCATION => true,
     CURLOPT_SSL_VERIFYPEER => true,
     CURLOPT_USERAGENT => 'MassChecker/1.0',
+    CURLOPT_DNS_CACHE_TIMEOUT => 300,
 ]);
 
 $apiResponse = curl_exec($ch);
