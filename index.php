@@ -7,15 +7,21 @@ $csrfToken = generateCSRFToken();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mass CC Checker</title>
+  <title>Mass CC Checker - Free Credit Card Validator Online</title>
   <meta name="description" content="Our free credit card checker instantly validates card numbers using the Luhn algorithm. Check Visa, Mastercard, Amex & more. No registration required.">
   <meta name="keywords" content="credit card validator, CC number checker, Luhn algorithm checker, payment card verification, free card checker, test credit cards, card number validator, BIN checker, card security check, bulk checker, mrchecker, namso, cc checker live">
   
   <!-- Canonical & Social Meta -->
-  <link rel="canonical" href="https://uncoder.eu.org/cc-checker">
-  <meta property="og:title" content="Mass CC Checker">
+  <link rel="canonical" href="https://masschk.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://masschk.com/">
+  <meta property="og:title" content="Mass CC Checker - Free Credit Card Validator Online">
   <meta property="og:description" content="Instantly check credit card validity with our free online checker. Supports all major card types with Luhn algorithm verification.">
-  <meta property="og:image" content="https://uncoder.eu.org/assets/icons/apple-touch-icon.png">
+  <meta property="og:image" content="https://masschk.com/favicon.svg">
+  <meta property="og:site_name" content="Mass CC Checker">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mass CC Checker - Free Credit Card Validator Online">
+  <meta name="twitter:description" content="Instantly check credit card validity with our free online checker. Supports all major card types with Luhn algorithm verification.">
   
   <!-- Robots -->
   <meta name="robots" content="index, follow">
@@ -27,7 +33,7 @@ $csrfToken = generateCSRFToken();
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Mass CC Checker",
-      "url": "https://uncoder.eu.org/cc-checker",
+      "url": "https://masschk.com/",
       "description": "Free online tool to validate credit card numbers using the Luhn algorithm",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web Browser",
@@ -35,10 +41,6 @@ $csrfToken = generateCSRFToken();
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
-      },
-      "creator": {
-        "@type": "Person",
-        "name": "OshekharO"
       }
     }
   </script>

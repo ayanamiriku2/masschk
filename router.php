@@ -21,6 +21,8 @@ if ($uri !== '/' && file_exists($filePath) && is_file($filePath)) {
         'gif'  => 'image/gif',
         'svg'  => 'image/svg+xml',
         'ico'  => 'image/x-icon',
+        'xml'  => 'application/xml',
+        'txt'  => 'text/plain',
     ];
 
     if (isset($mimeTypes[$ext])) {

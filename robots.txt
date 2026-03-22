@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /adminer/
+Disallow: /api.php
+Disallow: /data/
+Disallow: /security.php
+Disallow: /config.php
+Disallow: /router.php
+
+Sitemap: https://masschk.com/sitemap.xml
