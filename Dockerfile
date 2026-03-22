@@ -1,6 +1,10 @@
 FROM php:8.2-apache
 
-RUN a2dismod mpm_event && a2enmod mpm_prefork rewrite headers
+# Fix MPM conflict: remove all MPM configs, then enable only prefork + needed modules
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf /etc/apache2/mods-enabled/mpm_*.load && \
+    ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf && \
+    ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load && \
+    a2enmod rewrite headers
 
 # Increase PHP limits for large card lists
 RUN echo 'post_max_size = 64M' > /usr/local/etc/php/conf.d/uploads.ini && \
