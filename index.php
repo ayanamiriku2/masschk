@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/security.php';
+$csrfToken = generateCSRFToken();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,6 +145,9 @@
 
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script>
+    // Security token for API requests
+    window.CSRF_TOKEN = '<?php echo htmlspecialchars($csrfToken, ENT_QUOTES, "UTF-8"); ?>';
+
     /**
      * Credit Card Checker - Enhanced JavaScript
      * Features: Robust validation, card type detection, and improved UX
@@ -564,6 +571,7 @@
             url: elements.form.attr('action'),
             method: 'POST',
             data: { data: cc },
+            headers: { 'X-CSRF-TOKEN': window.CSRF_TOKEN },
             timeout: 120000
           });
           const jsonResponse = JSON.parse(response);

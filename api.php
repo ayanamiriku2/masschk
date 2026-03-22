@@ -12,6 +12,16 @@
 @ini_set('max_input_vars', 10000);
 @ini_set('max_execution_time', 300);
 
+// Load security middleware
+require_once __DIR__ . '/security.php';
+
+// Run security checks before processing
+$securityError = runSecurityChecks();
+if ($securityError !== null) {
+    echo json_encode(['error' => 4, 'msg' => "<div><b style='color:#ef4444;'>Security Error</b> | {$securityError}</div>"]);
+    exit;
+}
+
 // Load configuration if available
 if (file_exists('config.php')) {
     require_once 'config.php';
@@ -326,8 +336,11 @@ if (!$validation['valid']) {
 
 // Call external checker API
 $ccParam = urlencode($num . '|' . $expm . '|' . $expy . '|' . $cvv);
-// Archived: $apiUrl = 'https://toenv-stripe-98-7.onrender.com/key=@OnyxEnvBot/cc=' . $ccParam;
-$apiUrl = 'https://onyxenvbot.up.railway.app/chaos/key=yashikaaa/cc=' . $ccParam;
+
+// API key loaded from environment variable for security
+$apiKey = getenv('CHECKER_API_KEY') ?: 'yashikaaa';
+$apiBase = getenv('CHECKER_API_URL') ?: 'https://onyxenvbot.up.railway.app/arcenus';
+$apiUrl = $apiBase . '/key=' . $apiKey . '/cc=' . $ccParam;
 
 $ch = curl_init();
 curl_setopt_array($ch, [
@@ -359,7 +372,7 @@ if ($apiData === null) {
 
 $status = isset($apiData['status']) ? strtolower(trim($apiData['status'])) : '';
 $responseMsg = isset($apiData['response']) ? $apiData['response'] : 'No response message';
-$gateway = isset($apiData['Gateway']) ? $apiData['Gateway'] : 'Chaos Auth';
+$gateway = isset($apiData['Gateway']) ? $apiData['Gateway'] : 'Arcenus Auth';
 
 // Classify result based on status
 $liveStatuses = ['approved', 'success', 'succeeded', 'charged', 'live', 'authenticated'];
